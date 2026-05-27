@@ -1,4 +1,10 @@
 {
   "buildCommand": "cd stonewater-rag-ui && npm run build",
-  "outputDirectory": "stonewater-rag-ui/build"
+  "outputDirectory": "stonewater-rag-ui/build",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }
