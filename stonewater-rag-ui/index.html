@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stonewater RAG</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: system-ui, -apple-system, sans-serif; background: #fff; }
+
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .login-box {
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .title { font-size: 28px; margin-bottom: 8px; color: #333; }
+        .subtitle { font-size: 14px; color: #666; margin-bottom: 24px; }
+
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .form-group button:hover { background-color: #0056b3; }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #fff;
+        }
+
+        .header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 { font-size: 20px; }
+        .header-buttons { display: flex; gap: 8px; }
+        .header button {
+            padding: 8px 16px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background-color: #007bff;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+
+        .assistant-message {
+            align-self: flex-start;
+            background-color: #f0f0f0;
+            color: #333;
+            padding: 12px 16px;
+            border-radius: 8px;
+            max-width: 85%;
+            word-wrap: break-word;
+        }
+
+        .system-message {
+            align-self: center;
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            max-width: 80%;
+        }
+
+        .input-form {
+            display: flex;
+            gap: 8px;
+            padding: 16px 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .input-form input {
+            flex: 1;
+            padding: 10px 12px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        .input-form button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #999;
+            margin-top: 40px;
+        }
+
+        .citations {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(0,0,0,0.1);
+            font-size: 12px;
+        }
+
+        .citation {
+            margin-top: 8px;
+            padding-left: 12px;
+            border-left: 3px solid #007bff;
+        }
+
+        .citation-title { font-weight: bold; margin-bottom: 4px; }
+        .citation-details { font-size: 11px; color: #666; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script>
+        const root = document.getElementById('root');
+
+        let apiUrl = localStorage.getItem('apiUrl') || 'https://Benpcolella.pythonanywhere.com';
+        let apiKey = localStorage.getItem('apiKey') || '';
+        let isLoggedIn = !!apiUrl && !!apiKey;
+        let messages = [];
+        let isLoading = false;
+
+        function render() {
+            if (!isLoggedIn) {
+                root.innerHTML = `
+                    <div class="login-container">
+                        <div class="login-box">
+                            <h1 class="title">Stonewater RAG</h1>
+                            <p class="subtitle">Document Search & Query System</p>
+                            <form onsubmit="handleLogin(event)">
+                                <div class="form-group">
+                                    <label for="apiUrl">API URL:</label>
+                                    <input id="apiUrl" type="text" value="${apiUrl}" placeholder="https://api.example.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="apiKey">API Key:</label>
+                                    <input id="apiKey" type="password" placeholder="Your API Key">
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit">Connect</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('apiUrl').value = apiUrl;
+                document.getElementById('apiKey').value = apiKey;
+            } else {
+                root.innerHTML = `
+                    <div class="container">
+                        <div class="header">
+                            <h1 class="title">Stonewater RAG</h1>
+                            <div class="header-buttons">
+                                <button onclick="handleLogout()">Logout</button>
+                            </div>
+                        </div>
+                        <div class="messages-container" id="messages">
+                            ${messages.length === 0 ? '<div class="empty-state"><p>👋 Welcome! Ask me anything about your documents.</p></div>' : ''}
+                            ${messages.map((msg, idx) => `
+                                <div class="${msg.type}-message">
+                                    <div>${escapeHtml(msg.content)}</div>
+                                    ${msg.citations ? `<div class="citations">
+                                        <strong>Sources:</strong>
+                                        ${msg.citations.map((c, i) => `
+                                            <div class="citation">
+                                                <div class="citation-title">📄 ${escapeHtml(c.file_name)}</div>
+                                                <div class="citation-details">${c.doc_type ? 'Type: ' + escapeHtml(c.doc_type) + ' | ' : ''}${c.client_project ? 'Project: ' + escapeHtml(c.client_project) + ' | ' : ''}${c.page_start ? 'Pages: ' + c.page_start + (c.page_end !== c.page_start ? '-' + c.page_end : '') : ''}</div>
+                                            </div>
+                                        `).join('')}
+                                    </div>` : ''}
+                                </div>
+                            `).join('')}
+                            ${isLoading ? '<div class="system-message">⏳ Processing...</div>' : ''}
+                        </div>
+                        <form class="input-form" onsubmit="handleSubmit(event)">
+                            <input type="text" id="inputValue" placeholder="Ask a question about your documents..." ${isLoading ? 'disabled' : ''}>
+                            <button type="submit" ${isLoading ? 'disabled' : ''}>Send</button>
+                        </form>
+                    </div>
+                `;
+                document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const newApiUrl = document.getElementById('apiUrl').value;
+            const newApiKey = document.getElementById('apiKey').value;
+
+            if (!newApiUrl || !newApiKey) {
+                alert('Please enter both API URL and API Key');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${newApiUrl}/health`, { method: 'GET' });
+                if (response.ok) {
+                    apiUrl = newApiUrl;
+                    apiKey = newApiKey;
+                    localStorage.setItem('apiUrl', apiUrl);
+                    localStorage.setItem('apiKey', apiKey);
+                    isLoggedIn = true;
+                    messages = [];
+                    render();
+                } else {
+                    alert('Failed to connect to API. Check your URL and try again.');
+                }
+            } catch (error) {
+                alert(`Connection error: ${error.message}`);
+            }
+        }
+
+        async function handleSubmit(e) {
+            e.preventDefault();
+            const inputValue = document.getElementById('inputValue').value.trim();
+
+            if (!inputValue) return;
+
+            messages.push({ type: 'user', content: inputValue });
+            document.getElementById('inputValue').value = '';
+            isLoading = true;
+            render();
+
+            try {
+                const response = await fetch(`${apiUrl}/api/query`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify({ question: inputValue })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    messages.push({
+                        type: 'assistant',
+                        content: data.answer,
+                        citations: data.citations || []
+                    });
+                } else {
+                    alert('Error querying API');
+                }
+            } catch (error) {
+                messages.push({
+                    type: 'system',
+                    content: `Error: ${error.message}`
+                });
+            } finally {
+                isLoading = false;
+                render();
+            }
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('apiUrl');
+            localStorage.removeItem('apiKey');
+            isLoggedIn = false;
+            apiUrl = '';
+            apiKey = '';
+            messages = [];
+            render();
+        }
+
+        render();
+    </script>
+</body>
+</html>
