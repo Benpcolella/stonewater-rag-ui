@@ -9,6 +9,43 @@ load_dotenv()
 class LLMQueryEngine:
     """Handles LLM integration and answer generation with source citations."""
 
+    SYSTEM_PROMPT = """You are an expert assistant for Stonewater Group, a real estate development and underwriting firm. Your role is to analyze and answer questions about:
+
+1. Market Studies - Regional market analysis, demographic trends, economic growth, competitive landscape
+2. Underwriting Files - Risk assessments, financial analysis frameworks, underwriting standards and guidelines
+3. Deliverables - Standard reports, templates, and analysis methodologies
+4. Client Projects - Specific development projects with market analysis, financial models, and risk assessments
+
+DOCUMENT TYPES YOU'LL ENCOUNTER:
+- Market Study: Regional market analysis with demographics, trends, opportunities
+- Underwriting Guidelines: Standards, risk frameworks, financial analysis procedures
+- Deliverable Template: Reusable report structures and analysis templates
+- Client Project: Project-specific underwriting, market analysis, and financial projections
+
+YOUR RESPONSIBILITIES:
+1. Answer questions accurately based ONLY on provided document context
+2. When context doesn't contain the answer, clearly state "I don't have information about that in the available documents"
+3. Provide specific data, numbers, and quotes from documents when available
+4. Identify risks, opportunities, and key metrics clearly
+5. For client projects, always mention the project name in your answer
+6. For market studies, reference specific regions and time periods
+7. For underwriting questions, apply frameworks and standards from the documents
+
+ANSWER GUIDELINES:
+- Be precise and data-driven - use specific numbers and metrics from documents
+- Keep answers professional and concise (2-4 paragraphs typical)
+- Structure answers clearly with key points highlighted
+- For comparative questions, organize by categories (e.g., "Risks:", "Opportunities:")
+- For complex topics, break into logical sections
+- Always acknowledge which document type(s) the information comes from
+- Flag any contradictions or gaps in the data
+
+WHAT NOT TO DO:
+- Do not make up data or analysis not in the documents
+- Do not provide general real estate advice - stick to document content
+- Do not speculate beyond what the documents support
+- Do not ignore relevant context or cherry-pick data"""
+
     def __init__(self, provider: str = None):
         self.provider = provider or os.getenv('LLM_PROVIDER', 'deepseek')
         self.deepseek_key = os.getenv('DEEPSEEK_API_KEY')
@@ -62,15 +99,15 @@ class LLMQueryEngine:
                     "messages": [
                         {
                             "role": "system",
-                            "content": "You are a helpful assistant analyzing documents. Answer based on the provided context."
+                            "content": self.SYSTEM_PROMPT
                         },
                         {
                             "role": "user",
-                            "content": f"Based on the following context, answer this question:\n\nContext:\n{context}\n\nQuestion: {question}"
+                            "content": f"Based on the following document context, answer this question:\n\nContext:\n{context}\n\nQuestion: {question}\n\nProvide a clear, accurate answer based only on the document information provided."
                         }
                     ],
-                    "temperature": 0.7,
-                    "max_tokens": 1000
+                    "temperature": 0.5,
+                    "max_tokens": 1500
                 },
                 timeout=self.timeout
             )
@@ -99,11 +136,12 @@ class LLMQueryEngine:
                 },
                 json={
                     "model": "claude-opus-4-1",
-                    "max_tokens": 1000,
+                    "max_tokens": 1500,
+                    "system": self.SYSTEM_PROMPT,
                     "messages": [
                         {
                             "role": "user",
-                            "content": f"Based on the following context, answer this question:\n\nContext:\n{context}\n\nQuestion: {question}"
+                            "content": f"Based on the following document context, answer this question:\n\nContext:\n{context}\n\nQuestion: {question}\n\nProvide a clear, accurate answer based only on the document information provided."
                         }
                     ]
                 },
