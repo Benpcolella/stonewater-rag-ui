@@ -4,326 +4,513 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stonewater RAG</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: system-ui, -apple-system, sans-serif; background: #fff; }
 
+        :root {
+            --primary-dark: #303D30;
+            --accent-warm: #A09487;
+            --accent-light: #C4B7AD;
+            --bg-cream: #EFEAE6;
+            --muted-green: #6E6C5A;
+            --white: #FFFFFF;
+            --text-dark: #2C2C2C;
+            --border-light: #D8D0CC;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: var(--white);
+            color: var(--text-dark);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* Login Screen */
         .login-container {
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-color: #f5f5f5;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--muted-green) 100%);
         }
 
         .login-box {
-            background-color: white;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            background-color: var(--white);
+            padding: 48px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
         }
 
-        .title { font-size: 28px; margin-bottom: 8px; color: #333; }
-        .subtitle { font-size: 14px; color: #666; margin-bottom: 24px; }
+        .login-header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
 
-        .form-group { margin-bottom: 16px; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; }
+        .sw-logo {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--primary-dark);
+            margin-bottom: 12px;
+            font-family: 'Helvetica', sans-serif;
+        }
+
+        .login-title {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        .login-subtitle {
+            font-size: 14px;
+            color: var(--accent-warm);
+            font-weight: 400;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--text-dark);
+            letter-spacing: 0.3px;
+        }
+
         .form-group input {
             width: 100%;
-            padding: 10px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
+            padding: 12px 14px;
+            border-radius: 6px;
+            border: 1px solid var(--border-light);
             font-size: 14px;
+            font-family: 'Open Sans', sans-serif;
+            background: var(--white);
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent-warm);
+            box-shadow: 0 0 0 3px rgba(160, 148, 135, 0.1);
         }
 
         .form-group button {
             width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: white;
+            padding: 12px 16px;
+            background-color: var(--primary-dark);
+            color: var(--white);
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
+            font-family: 'Open Sans', sans-serif;
+            letter-spacing: 0.3px;
+            transition: all 0.3s ease;
         }
 
-        .form-group button:hover { background-color: #0056b3; }
+        .form-group button:hover {
+            background-color: var(--muted-green);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(48, 61, 48, 0.2);
+        }
 
+        /* Chat Interface */
         .container {
             display: flex;
             flex-direction: column;
             height: 100vh;
-            background-color: #fff;
+            background-color: var(--white);
         }
 
         .header {
-            padding: 16px 20px;
-            border-bottom: 1px solid #e0e0e0;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-light);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: var(--white);
         }
 
-        .header h1 { font-size: 20px; }
-        .header-buttons { display: flex; gap: 8px; }
+        .header h1 {
+            font-size: 18px;
+            letter-spacing: 0.5px;
+            color: var(--primary-dark);
+        }
+
+        .header-buttons { display: flex; gap: 10px; }
+
         .header button {
             padding: 8px 16px;
-            background-color: #f0f0f0;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            background-color: var(--bg-cream);
+            color: var(--primary-dark);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
             cursor: pointer;
             font-size: 12px;
+            font-weight: 600;
+            font-family: 'Open Sans', sans-serif;
+            transition: all 0.3s ease;
+            letter-spacing: 0.3px;
+        }
+
+        .header button:hover {
+            background-color: var(--accent-light);
+            border-color: var(--accent-warm);
         }
 
         .messages-container {
             flex: 1;
             overflow-y: auto;
-            padding: 20px;
+            padding: 24px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 16px;
+            background: var(--white);
         }
 
         .user-message {
             align-self: flex-end;
-            background-color: #007bff;
-            color: white;
+            background-color: var(--primary-dark);
+            color: var(--white);
             padding: 12px 16px;
             border-radius: 8px;
             max-width: 70%;
             word-wrap: break-word;
+            font-size: 14px;
+            line-height: 1.5;
         }
 
         .assistant-message {
             align-self: flex-start;
-            background-color: #f0f0f0;
-            color: #333;
-            padding: 12px 16px;
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            padding: 16px;
             border-radius: 8px;
             max-width: 85%;
             word-wrap: break-word;
-        }
-
-        .system-message {
-            align-self: center;
-            background-color: #fff3cd;
-            color: #856404;
-            padding: 12px 16px;
-            border-radius: 8px;
-            font-size: 13px;
-            max-width: 80%;
-        }
-
-        .input-form {
-            display: flex;
-            gap: 8px;
-            padding: 16px 20px;
-            border-top: 1px solid #e0e0e0;
-        }
-
-        .input-form input {
-            flex: 1;
-            padding: 10px 12px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
+            border-left: 3px solid var(--accent-warm);
             font-size: 14px;
+            line-height: 1.6;
         }
 
-        .input-form button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .empty-state {
-            text-align: center;
-            color: #999;
-            margin-top: 40px;
+        .assistant-message strong {
+            color: var(--primary-dark);
+            font-weight: 600;
         }
 
         .citations {
             margin-top: 12px;
             padding-top: 12px;
-            border-top: 1px solid rgba(0,0,0,0.1);
+            border-top: 1px solid var(--border-light);
+        }
+
+        .citation-header {
             font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-warm);
+            margin-bottom: 8px;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
         }
 
-        .citation {
-            margin-top: 8px;
-            padding-left: 12px;
-            border-left: 3px solid #007bff;
+        .citation-item {
+            font-size: 12px;
+            color: var(--text-dark);
+            margin: 6px 0;
+            padding: 6px 8px;
+            background: var(--white);
+            border-radius: 4px;
+            border-left: 2px solid var(--muted-green);
+            padding-left: 10px;
         }
 
-        .citation-title { font-weight: bold; margin-bottom: 4px; }
-        .citation-details { font-size: 11px; color: #666; }
+        .citation-file {
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        .citation-meta {
+            font-size: 11px;
+            color: var(--accent-warm);
+            margin-top: 2px;
+        }
+
+        .system-message {
+            align-self: center;
+            background-color: #FEF3E2;
+            color: #8B6F47;
+            padding: 12px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            max-width: 80%;
+            border-left: 3px solid #D4A574;
+        }
+
+        .input-form {
+            display: flex;
+            gap: 10px;
+            padding: 20px 24px;
+            border-top: 1px solid var(--border-light);
+            background: var(--white);
+        }
+
+        .input-form input {
+            flex: 1;
+            padding: 12px 14px;
+            border-radius: 6px;
+            border: 1px solid var(--border-light);
+            font-size: 14px;
+            font-family: 'Open Sans', sans-serif;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+
+        .input-form input:focus {
+            outline: none;
+            border-color: var(--accent-warm);
+            box-shadow: 0 0 0 3px rgba(160, 148, 135, 0.1);
+        }
+
+        .input-form button {
+            padding: 10px 20px;
+            background-color: var(--primary-dark);
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'Open Sans', sans-serif;
+            transition: all 0.3s ease;
+            font-size: 13px;
+        }
+
+        .input-form button:hover {
+            background-color: var(--muted-green);
+            transform: translateY(-1px);
+        }
+
+        .input-form button:active {
+            transform: translateY(0);
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-cream);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-warm);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--muted-green);
+        }
     </style>
 </head>
 <body>
-    <div id="root"></div>
 
-    <script>
-        const root = document.getElementById('root');
+<div id="login-screen" class="login-container">
+    <div class="login-box">
+        <div class="login-header">
+            <div class="sw-logo">SW</div>
+            <h1 class="login-title">Stonewater RAG</h1>
+            <p class="login-subtitle">Document Intelligence Platform</p>
+        </div>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="api-url">API URL</label>
+                <input
+                    type="text"
+                    id="api-url"
+                    placeholder="https://Benpcolella.pythonanywhere.com"
+                    required
+                >
+            </div>
+            <div class="form-group">
+                <label for="api-key">API Key</label>
+                <input
+                    type="password"
+                    id="api-key"
+                    placeholder="Enter your API key"
+                    required
+                >
+            </div>
+            <div class="form-group">
+                <button type="submit">Connect</button>
+            </div>
+        </form>
+    </div>
+</div>
 
-        let apiUrl = localStorage.getItem('apiUrl') || 'https://Benpcolella.pythonanywhere.com';
-        let apiKey = localStorage.getItem('apiKey') || '';
-        let isLoggedIn = !!apiUrl && !!apiKey;
-        let messages = [];
-        let isLoading = false;
+<div id="chat-screen" class="container" style="display:none;">
+    <div class="header">
+        <h1>Stonewater RAG</h1>
+        <div class="header-buttons">
+            <button onclick="clearHistory()">Clear</button>
+            <button onclick="logout()">Disconnect</button>
+        </div>
+    </div>
+    <div class="messages-container" id="messages"></div>
+    <div class="input-form">
+        <input
+            type="text"
+            id="message-input"
+            placeholder="Ask a question about your documents..."
+            onkeypress="if(event.key === 'Enter') sendMessage()"
+        >
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
 
-        function render() {
-            if (!isLoggedIn) {
-                root.innerHTML = `
-                    <div class="login-container">
-                        <div class="login-box">
-                            <h1 class="title">Stonewater RAG</h1>
-                            <p class="subtitle">Document Search & Query System</p>
-                            <form onsubmit="handleLogin(event)">
-                                <div class="form-group">
-                                    <label for="apiUrl">API URL:</label>
-                                    <input id="apiUrl" type="text" value="${apiUrl}" placeholder="https://api.example.com">
-                                </div>
-                                <div class="form-group">
-                                    <label for="apiKey">API Key:</label>
-                                    <input id="apiKey" type="password" placeholder="Your API Key">
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit">Connect</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                `;
-                document.getElementById('apiUrl').value = apiUrl;
-                document.getElementById('apiKey').value = apiKey;
-            } else {
-                root.innerHTML = `
-                    <div class="container">
-                        <div class="header">
-                            <h1 class="title">Stonewater RAG</h1>
-                            <div class="header-buttons">
-                                <button onclick="handleLogout()">Logout</button>
-                            </div>
-                        </div>
-                        <div class="messages-container" id="messages">
-                            ${messages.length === 0 ? '<div class="empty-state"><p>👋 Welcome! Ask me anything about your documents.</p></div>' : ''}
-                            ${messages.map((msg, idx) => `
-                                <div class="${msg.type}-message">
-                                    <div>${escapeHtml(msg.content)}</div>
-                                    ${msg.citations ? `<div class="citations">
-                                        <strong>Sources:</strong>
-                                        ${msg.citations.map((c, i) => `
-                                            <div class="citation">
-                                                <div class="citation-title">📄 ${escapeHtml(c.file_name)}</div>
-                                                <div class="citation-details">${c.doc_type ? 'Type: ' + escapeHtml(c.doc_type) + ' | ' : ''}${c.client_project ? 'Project: ' + escapeHtml(c.client_project) + ' | ' : ''}${c.page_start ? 'Pages: ' + c.page_start + (c.page_end !== c.page_start ? '-' + c.page_end : '') : ''}</div>
-                                            </div>
-                                        `).join('')}
-                                    </div>` : ''}
-                                </div>
-                            `).join('')}
-                            ${isLoading ? '<div class="system-message">⏳ Processing...</div>' : ''}
-                        </div>
-                        <form class="input-form" onsubmit="handleSubmit(event)">
-                            <input type="text" id="inputValue" placeholder="Ask a question about your documents..." ${isLoading ? 'disabled' : ''}>
-                            <button type="submit" ${isLoading ? 'disabled' : ''}>Send</button>
-                        </form>
-                    </div>
-                `;
-                document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
-            }
+<script>
+let apiUrl = '';
+let apiKey = '';
+const messageHistory = [];
+
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    apiUrl = document.getElementById('api-url').value;
+    apiKey = document.getElementById('api-key').value;
+
+    try {
+        const response = await fetch(`${apiUrl}/health`);
+        if (response.ok) {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('chat-screen').style.display = 'flex';
+            addSystemMessage('Connected to Stonewater RAG. How can I help?');
+        } else {
+            alert('Failed to connect. Please check your API URL.');
         }
+    } catch (error) {
+        alert('Connection failed: ' + error.message);
+    }
+});
 
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
+function addSystemMessage(text) {
+    const messagesDiv = document.getElementById('messages');
+    const msgEl = document.createElement('div');
+    msgEl.className = 'system-message';
+    msgEl.textContent = text;
+    messagesDiv.appendChild(msgEl);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
 
-        async function handleLogin(e) {
-            e.preventDefault();
-            const newApiUrl = document.getElementById('apiUrl').value;
-            const newApiKey = document.getElementById('apiKey').value;
+function addUserMessage(text) {
+    const messagesDiv = document.getElementById('messages');
+    const msgEl = document.createElement('div');
+    msgEl.className = 'user-message';
+    msgEl.textContent = text;
+    messagesDiv.appendChild(msgEl);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
 
-            if (!newApiUrl || !newApiKey) {
-                alert('Please enter both API URL and API Key');
-                return;
-            }
+function addAssistantMessage(answer, citations) {
+    const messagesDiv = document.getElementById('messages');
+    const msgEl = document.createElement('div');
+    msgEl.className = 'assistant-message';
 
-            try {
-                const response = await fetch(`${newApiUrl}/health`, { method: 'GET' });
-                if (response.ok) {
-                    apiUrl = newApiUrl;
-                    apiKey = newApiKey;
-                    localStorage.setItem('apiUrl', apiUrl);
-                    localStorage.setItem('apiKey', apiKey);
-                    isLoggedIn = true;
-                    messages = [];
-                    render();
-                } else {
-                    alert('Failed to connect to API. Check your URL and try again.');
+    msgEl.innerHTML = `<p>${answer}</p>`;
+
+    if (citations && citations.length > 0) {
+        const citationsDiv = document.createElement('div');
+        citationsDiv.className = 'citations';
+        citationsDiv.innerHTML = '<div class="citation-header">Sources</div>';
+
+        const seen = new Set();
+        for (const citation of citations) {
+            const key = citation.file_name;
+            if (!seen.has(key)) {
+                const citItem = document.createElement('div');
+                citItem.className = 'citation-item';
+                let html = `<div class="citation-file">📄 ${citation.file_name}</div>`;
+                if (citation.doc_type) html += `<div class="citation-meta">Type: ${citation.doc_type}</div>`;
+                if (citation.client_project) html += `<div class="citation-meta">Project: ${citation.client_project}</div>`;
+                if (citation.page_start) {
+                    const pages = citation.page_end && citation.page_end !== citation.page_start
+                        ? `${citation.page_start}-${citation.page_end}`
+                        : citation.page_start;
+                    html += `<div class="citation-meta">Pages: ${pages}</div>`;
                 }
-            } catch (error) {
-                alert(`Connection error: ${error.message}`);
+                citItem.innerHTML = html;
+                citationsDiv.appendChild(citItem);
+                seen.add(key);
             }
         }
+        msgEl.appendChild(citationsDiv);
+    }
 
-        async function handleSubmit(e) {
-            e.preventDefault();
-            const inputValue = document.getElementById('inputValue').value.trim();
+    messagesDiv.appendChild(msgEl);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
 
-            if (!inputValue) return;
+async function sendMessage() {
+    const input = document.getElementById('message-input');
+    const question = input.value.trim();
+    if (!question) return;
 
-            messages.push({ type: 'user', content: inputValue });
-            document.getElementById('inputValue').value = '';
-            isLoading = true;
-            render();
+    addUserMessage(question);
+    input.value = '';
 
-            try {
-                const response = await fetch(`${apiUrl}/api/query`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${apiKey}`
-                    },
-                    body: JSON.stringify({ question: inputValue })
-                });
+    try {
+        const response = await fetch(`${apiUrl}/api/query`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${apiKey}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ question })
+        });
 
-                if (response.ok) {
-                    const data = await response.json();
-                    messages.push({
-                        type: 'assistant',
-                        content: data.answer,
-                        citations: data.citations || []
-                    });
-                } else {
-                    alert('Error querying API');
-                }
-            } catch (error) {
-                messages.push({
-                    type: 'system',
-                    content: `Error: ${error.message}`
-                });
-            } finally {
-                isLoading = false;
-                render();
-            }
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+        const data = await response.json();
+        if (data.status === 'success') {
+            addAssistantMessage(data.answer, data.citations);
+            messageHistory.push({ role: 'user', content: question });
+            messageHistory.push({ role: 'assistant', content: data.answer });
+        } else {
+            addSystemMessage('Error: ' + (data.error || 'Unknown error'));
         }
+    } catch (error) {
+        addSystemMessage('Connection error: ' + error.message);
+    }
+}
 
-        function handleLogout() {
-            localStorage.removeItem('apiUrl');
-            localStorage.removeItem('apiKey');
-            isLoggedIn = false;
-            apiUrl = '';
-            apiKey = '';
-            messages = [];
-            render();
-        }
+function clearHistory() {
+    document.getElementById('messages').innerHTML = '';
+    messageHistory.length = 0;
+    addSystemMessage('History cleared.');
+}
 
-        render();
-    </script>
+function logout() {
+    document.getElementById('chat-screen').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('login-form').reset();
+    document.getElementById('messages').innerHTML = '';
+    messageHistory.length = 0;
+    apiUrl = '';
+    apiKey = '';
+}
+</script>
+
 </body>
 </html>
