@@ -1,10 +1,16 @@
 {
+  "installCommand": "cd stonewater-rag-ui && npm install",
   "buildCommand": "cd stonewater-rag-ui && npm run build",
   "outputDirectory": "stonewater-rag-ui/build",
-  "rewrites": [
+  "headers": [
     {
       "source": "/(.*)",
-      "destination": "/index.html"
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
     }
   ]
 }
