@@ -1,7 +1,6 @@
 {
-  "buildCommand": "npm run build",
+  "buildCommand": "cd stonewater-rag-ui && npm run build",
   "outputDirectory": "stonewater-rag-ui/build",
-  "ignoreBuildStep": true,
   "framework": "react",
   "root": "stonewater-rag-ui"
 }
