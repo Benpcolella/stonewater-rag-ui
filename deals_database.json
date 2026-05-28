@@ -1,0 +1,136 @@
+{
+  "Rivulet": {
+    "source_file": "2026.01.16_Smart Living_Rivulet - vSW 1.23.26.xlsx  -  Group.pdf",
+    "project_info": {
+      "name": "Rivulet",
+      "type": "Construction",
+      "phase": "1"
+    },
+    "location": {
+      "city": "Dallas",
+      "state": "TX",
+      "zip": "75241",
+      "market": "OPERATING EXPENSES"
+    },
+    "units": {
+      "total_units": 240,
+      "unit_types": {
+        "2br": 460
+      },
+      "rentable_sf": 164595,
+      "gross_sf": 173095,
+      "density_units_per_acre": null
+    },
+    "costs": {
+      "total_cost": "$220,304",
+      "total_cost_numeric": 220304.0,
+      "hard_costs": "$238.22",
+      "hard_costs_percent": "74.2%",
+      "soft_costs": "$5.00",
+      "soft_costs_percent": "15.6%",
+      "land_cost": "$1",
+      "cost_per_unit": "$917,933,333",
+      "cost_per_sf": "$240"
+    },
+    "financing": {
+      "loan_amount": "$23.3M",
+      "loan_amount_numeric": 23264085.0,
+      "ltc_percent": "44.00%",
+      "ltv_percent": null,
+      "interest_rate": null,
+      "sofr_spread": null,
+      "all_in_rate": null,
+      "loan_term_months": 36,
+      "loan_term_years": 3.0,
+      "amortization_months": 360,
+      "amortization_years": 30,
+      "io_period_months": 36.0,
+      "facility_type": "Construction"
+    },
+    "returns": {
+      "equity_contribution": "$29.6M",
+      "equity_contribution_numeric": 29608800.0,
+      "irr_percent": null,
+      "coc_percent": null,
+      "cap_rate": null,
+      "yield_percent": null
+    },
+    "timeline": {
+      "construction_duration_months": null,
+      "start_date": null,
+      "completion_date": null
+    },
+    "occupancy_market": {
+      "initial_occupancy_percent": null,
+      "stabilized_occupancy_percent": null,
+      "rent_per_sf": null,
+      "market_absorption_rate": null
+    }
+  },
+  "Bayview Estates": {
+    "source_file": "Bayview_Estates_Syracuse_IN_Fixed.xlsx  -  Group.pdf",
+    "project_info": {
+      "name": "Bayview Estates",
+      "type": null,
+      "phase": null
+    },
+    "location": {
+      "city": null,
+      "state": null,
+      "zip": "55539",
+      "market": null
+    },
+    "units": {
+      "total_units": null,
+      "unit_types": null,
+      "rentable_sf": null,
+      "gross_sf": null,
+      "density_units_per_acre": null
+    },
+    "costs": {
+      "total_cost": null,
+      "total_cost_numeric": null,
+      "hard_costs": null,
+      "hard_costs_percent": null,
+      "soft_costs": null,
+      "soft_costs_percent": null,
+      "land_cost": null,
+      "cost_per_unit": null,
+      "cost_per_sf": null
+    },
+    "financing": {
+      "loan_amount": null,
+      "loan_amount_numeric": null,
+      "ltc_percent": null,
+      "ltv_percent": null,
+      "interest_rate": null,
+      "sofr_spread": null,
+      "all_in_rate": null,
+      "loan_term_months": null,
+      "loan_term_years": null,
+      "amortization_months": null,
+      "amortization_years": null,
+      "io_period_months": null,
+      "facility_type": null
+    },
+    "returns": {
+      "equity_contribution": null,
+      "equity_contribution_numeric": null,
+      "irr_percent": null,
+      "coc_percent": null,
+      "cap_rate": null,
+      "yield_percent": null
+    },
+    "timeline": {
+      "construction_duration_months": null,
+      "start_date": null,
+      "completion_date": null
+    },
+    "occupancy_market": {
+      "initial_occupancy_percent": null,
+      "stabilized_occupancy_percent": null,
+      "rent_per_sf": null,
+      "market_absorption_rate": null
+    }
+  }
+}
