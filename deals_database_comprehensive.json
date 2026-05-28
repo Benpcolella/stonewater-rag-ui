@@ -1,0 +1,215 @@
+{
+  "Rivulet, Phase 1 South": {
+    "source_file": "2026.01.16_Smart Living_Rivulet - vSW 1.23.26.xlsx  -  Group.pdf",
+    "metadata": {
+      "extraction_date": "2026-05-27",
+      "pages": "unknown"
+    },
+    "property_information": {
+      "project_name": "Rivulet, Phase 1 South",
+      "location": null,
+      "street_address": "TBD Total Hard Costs 74.2% $ 238.22 $ 226.52 $ 1 63,371 $ 3 9,209,113 Loan Proceeds $ 23,264,085",
+      "city": "Dallas",
+      "state": "TX",
+      "zip": "75241",
+      "total_units": 240.0,
+      "rentable_sf": 164595.0,
+      "gross_sf": 173095.0,
+      "lot_size_acres": 6.52,
+      "lot_size_sf": 284011.0,
+      "density_units_per_acre": 3.0,
+      "land_value_per_sf": "$1.00",
+      "land_value_per_unit": "$1.00"
+    },
+    "financial_summary": {
+      "total_cost": {
+        "percent": "100.0%",
+        "per_rsf": "$321.23",
+        "per_gsf": "$305.46",
+        "per_unit": "$220,304",
+        "total": "$5.00",
+        "total_numeric": 5.0
+      },
+      "land_costs": {
+        "percent": "5.5%",
+        "per_rsf": "$17.75",
+        "per_gsf": "$16.88",
+        "per_unit": "$12,172",
+        "total": "$2.9M",
+        "total_numeric": 2921362.0
+      },
+      "hard_costs": {
+        "percent": "74.2%",
+        "per_rsf": "$238",
+        "per_gsf": "$227",
+        "per_unit": "$163,371",
+        "total": "$39.2M",
+        "total_numeric": 39209113.0
+      },
+      "soft_costs": {
+        "percent": "15.6%",
+        "per_rsf": "$50.20",
+        "per_gsf": "$47.73",
+        "per_unit": "$34,426",
+        "total": "$8.3M",
+        "total_numeric": 8262170.0
+      },
+      "financing_costs": {
+        "percent": "4.7%",
+        "per_rsf": "$15.07",
+        "per_gsf": "$14.33",
+        "per_unit": "$10,334",
+        "total": "$2.5M",
+        "total_numeric": 2480240.0
+      },
+      "sources_total": {
+        "percent": "100.0%",
+        "per_rsf": "$321.23",
+        "per_gsf": "$305.46",
+        "per_unit": "$220,304",
+        "total": "$5.00",
+        "total_numeric": 5.0
+      },
+      "equity_total": {
+        "percent": "56.0%",
+        "per_rsf": "$179.89",
+        "per_gsf": "$171.06",
+        "per_unit": "$123,370",
+        "total": "$29.6M",
+        "total_numeric": 29608800.0
+      }
+    },
+    "equity_breakdown": {
+      "sponsor": {
+        "percent": "5.6%",
+        "amount": "$1.00",
+        "amount_numeric": 1.0
+      },
+      "common_equity_lps": {
+        "percent": "50.4%",
+        "amount": "$161.90",
+        "amount_numeric": 161.9
+      },
+      "preferred_equity_lps": {
+        "percent": "0.0%",
+        "amount": "$2.00",
+        "amount_numeric": 2.0
+      }
+    },
+    "construction_financing": {
+      "loan_type": "Construction",
+      "loan_amount": "$23.3M",
+      "loan_amount_numeric": 23264085.0,
+      "ltc_percent": "44.0%",
+      "loan_term_months": 36.0,
+      "loan_term_years": 3.0,
+      "amortization_months": 360.0,
+      "amortization_years": 30.0,
+      "interest_only_months": 36.0,
+      "interest_rate_percent": "7.75%",
+      "io_payment_monthly": "$1.00",
+      "pi_payment_monthly": "$2.00",
+      "io_dscr": 1.46,
+      "pi_dscr": 1.46,
+      "yield_on_debt": "4.0%"
+    },
+    "permanent_financing": {
+      "refinance": "Yes",
+      "refinance_month": 36.0,
+      "loan_type": null,
+      "loan_amount": "$34.4M",
+      "loan_amount_numeric": 34351145.0,
+      "ltv_percent": "68.5%",
+      "loan_term_months": null,
+      "loan_term_years": null,
+      "amortization_months": null,
+      "amortization_years": null,
+      "interest_rate_percent": null,
+      "dscr_requirement": 1.25,
+      "dscr_loan_amount": "$31.6M",
+      "refinance_cost_percent": "0.75%",
+      "yield_on_debt": null
+    },
+    "operating_assumptions": {
+      "analysis_start_date": "2/1/27",
+      "construction_start_date": "2/1/27",
+      "construction_duration_months": 24.0,
+      "stabilized_month": "Jan",
+      "first_full_stabilized_year": 4.0,
+      "first_units_month": null,
+      "hold_period_years": 5.0,
+      "general_vacancy_percent": "7.0%",
+      "operating_expense_ratio_percent": "36.56%",
+      "break_even_occupancy_percent": "34.0%"
+    },
+    "rent_growth_assumptions": {
+      "year_1_percent": "2.50%",
+      "year_2_percent": "2.50%",
+      "year_3_percent": "2.50%",
+      "year_4_percent": "2.50%",
+      "year_5_percent": "2.50%"
+    },
+    "exit_assumptions": {
+      "exit_cap_rate": "5.25%",
+      "gross_sale_price": "$310.84",
+      "gross_sale_price_numeric": 310.84,
+      "transaction_costs_percent": "1.5%",
+      "market_value": "$2.00",
+      "market_value_numeric": 2.0
+    },
+    "unit_mix": null,
+    "other_income": {
+      "utility_reimbursements": {
+        "value": "75",
+        "unit_rate": "1"
+      },
+      "parking_income": {
+        "value": "0",
+        "unit_rate": null
+      },
+      "pet_rent": {
+        "value": "30",
+        "unit_rate": null
+      }
+    },
+    "operating_expenses": {
+      "insurance": "$250,000",
+      "management_fee": "$2.0M"
+    },
+    "project_returns": {
+      "unlevered_irr_percent": "2.0%",
+      "unlevered_equity_multiple": 2.0,
+      "levered_irr_percent": "2.0%",
+      "levered_equity_multiple": 2.0,
+      "yield_on_total_project_costs": "3.94%",
+      "yield_on_total_project_costs_incentive_adjusted": "7.86%",
+      "cash_on_cash_return": "57.6%"
+    },
+    "investor_returns": {
+      "lp_irr_percent": "19.1%",
+      "lp_equity_multiple": 19.1,
+      "lp_cash_flow_profit": "$1.00",
+      "preferred_equity_irr": null,
+      "preferred_equity_yield": null
+    },
+    "incentives": {
+      "total_incentive_amount": "$2.00",
+      "third_installment": {
+        "amount": "$26.4M",
+        "timing": "26"
+      }
+    },
+    "financing_rates_summary": {
+      "construction_rates": {
+        "interest_rate_percent": "15.0%",
+        "sofr_component": null,
+        "all_in_rate_percent": null
+      },
+      "permanent_rates": {
+        "interest_rate_percent": null,
+        "sofr_component": null,
+        "all_in_rate_percent": null
+      }
+    }
+  }
+}
